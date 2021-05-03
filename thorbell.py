@@ -16,7 +16,7 @@ import json
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
 
-urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
+urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status', '/update' , 'update')
 app = web.application(urls,globals())
 
 class root:
@@ -121,95 +121,97 @@ class connect:
 
 class status:
 	def GET(self):
-		with open("/home/applica/THORBELL/CSB_MercurioR1/status.py") as f:
+		with open("/home/applica/THORBELL/CSB_MercurioR1/status.dat") as f:
 			status = json.load(f)
 		return status
 
 class update:
 	def __init__(self):
 		self.path=__file__			#Obtiene ubicación actual
-        self.path=self.path.replace("/thorbell.py","")			#Elimina nombre de archivo, para obtener directorio
+		self.path=self.path.replace("/thorbell.py","")			#Elimina nombre de archivo, para obtener directorio
 
-        f=open(self.path+"/repo.txt","r")                 #obtiene la dirección del repositorio para descargar el update
-        url=f.readline()
+		with open(self.path+"/repo.txt") as f:                 #obtiene la dirección del repositorio para descargar el update
+			url=f.readline()
         #print(url)
 
-        #Obtiene la dirección del archivo de versión
-        f=open(self.path+"/versionURL.txt","r")
-        urlVersion=f.readline()
+		#Obtiene la dirección del archivo de versión
+		with open(self.path+"/versionURL.txt") as f:
+			urlVersion=f.readline()
 
-        #Aquí comienza el auto update
-        try:
-            fetch=requests.get(url)                 #Chekea tener conexión a internet, para ver si puede acceder al repositorio
-            if(fetch):
-                a=True                              #Conexión extablecida, pudo acceder al repo
-        except:
-            #print("Update repository not found")            #No pudo acceder al repo
-            a=False
+		a = False
+		#Aquí comienza el auto update
+		try:
+			fetch=requests.get(url)                 #Chekea tener conexión a internet, para ver si puede acceder al repositorio
+			if(fetch):
+				a=True                              #Conexión extablecida, pudo acceder al repo
+		except:						#No pudo acceder al repo
+			a=False
 
-        if(a):
-
-            #print("Auto Update")
-            if(not self.path):
-                self.path = "./"
+		if(a):
+			#print("Auto Update")
+            #if(not self.path):
+			#	self.path = "./"
             #updatePath = path + "UPDATE/"
-            self.updatePath="/home/applica/update/WEB_UPDATE"
+			self.updatePath="/home/applica/update/WEB_UPDATE"
             #print(updatePath)
-            command="rm -rf /home/applica/update/WEB_UPDATE"
-            subprocess.run(command,shell=True)
-            #command = "python3 -m pip install --upgrade git+" + url + "@stable -t " + updatePath 
-            """Download file "version.txt" to update path, and open it to check on latest version number """
+			command="rm -rf /home/applica/update/WEB_UPDATE"
+			subprocess.run(command,shell=True)
+            
+            #Download file "version.txt" to update path, and open it to check on latest version number 
 			command = "wget -P " + self.updatePath + " -c " + urlVersion 
-            response=subprocess.run(command,capture_output=True,text=True,shell=True)
+			response=subprocess.run(command,capture_output=True,text=True,shell=True)
             #print(response)
             #print(updatePath+"version.txt")
-            """Open file and read it's content."""
-            f = open(self.updatePath+"/version.txt","r").readline()
-            if(f[-1]=="\n"):
-                f=f[:-1]
+			#Open file and read it's content.
+			with open(self.updatePath+"/version.txt") as f:
+				f=f.readline()
+				if(f[-1]=="\n"):
+					f=f[:-1]
 
-            new = f.split(".")
-            newVersion=(int(new[0]),int(new[1]),int(new[2]))
+			new = f.split(".")
+			newVersion=(int(new[0]),int(new[1]),int(new[2]))
 			self.newVersion=newVersion
-            """Checks local version number. """
+            #Checks local version number. 
             #self.localPath = "/home/applica/THORBELL/"
-            try:
-                self.currentVersion=open(self.path + "/version.txt","r").readline()
-            except:
-                self.currentVersion="0.0.0"
+			try:
+				f=open(self.path + "/version.txt","r")
+				self.currentVersion=f.readline()
+				f.close()
+			except:
+				self.currentVersion="0.0.0"	
+			if(self.currentVersion[-1]=="\n"):
+			    self.currentVersion=self.currentVersion[:-1]
+			curr=self.currentVersion.split(".")
+			cVersion=(int(curr[0]),int(curr[1]),int(curr[2]))
+			#self.updateLabel.setText("Versión remota: " + f + "\nLocal: " + currentVersio			
+			self.update=False
+			"""If "Stable" version from repository is greater than current version, performs update"""
+			if(newVersion[0]>cVersion[0]):
+			    self.update=True
+			elif(newVersion[1]>cVersion[1]):
+			    self.update=True
+			elif(newVersion[2]>cVersion[2]):
+			    self.update=True
 
-            if(self.currentVersion[-1]=="\n"):
-                self.currentVersion=self.currentVersion[:-1]
-            curr=self.currentVersion.split(".")
-            cVersion=(int(curr[0]),int(curr[1]),int(curr[2]))
-            #self.updateLabel.setText("Versión remota: " + f + "\nLocal: " + currentVersion)
-
-            self.update=False
-            """If "Stable" version from repository is greater than current version, performs update"""
-            if(newVersion[0]>cVersion[0]):
-                self.update=True
-            elif(newVersion[1]>cVersion[1]):
-                self.update=True
-            elif(newVersion[2]>cVersion[2]):
-                self.update=True
-            
-            """if(update):
-                self.updateLabel.setText("Comienza la descarga")
-                #Download stable version from git
-                command="rm -rf /home/applica/update/UPDATE"
-                subprocess.run(command,shell=True)
-                #time.sleep(2)
-                command = "git clone " + url + " " + updatePath + " -b stable"
-                response=subprocess.run(command,capture_output=True,text=True,shell=True)
-                if(not response.returncode): # stdout.endswith("done.")):          #response from git clone is "Done"
-                    self.updateLabel.setText("Descarga completada.\nEn momentos se reiniciará para completar actualización")
+			"""if(update):
+			    self.updateLabel.setText("Comienza la descarga")
+			    #Download stable version from git
+			    command="rm -rf /home/applica/update/UPDATE"
+			    subprocess.run(command,shell=True)
+			    #time.sleep(2)
+			    command = "git clone " + url + " " + updatePath + " -b stable"
+			    response=subprocess.run(command,capture_output=True,text=True,shell=True)
+			    if(not response.returncode): # stdout.endswith("done.")):          #response from git clone is "Done"
+			        self.updateLabel.setText("Descarga completada.\nEn momentos se reiniciará para completar actualización")
                     time.sleep(5)
                     command="reboot"
                     subprocess.run(command,shell=True)"""
 	def GET(self):
 		page = self.path + "\n"
-		page += self.currentVersion + "\n"
-		page += "New version available: " + self.newVersion
+		page += "Version: " + self.currentVersion + "\n"
+		page += "New version available: " + self.newVersion + "\n"
+		page += "Update status: " + self.update
+		return page
         
 
 if __name__ == "__main__":
