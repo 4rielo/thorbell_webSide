@@ -106,7 +106,7 @@ class update:
                 command=f"rm -rf {self.updatePath}"
                 subprocess.run(command,shell=True)
                 #time.sleep(2)
-                command = f"git clone {url} {updatePath} -b stable"
+                command = f"git clone {url} {self.updatePath} -b stable"
                 response=subprocess.run(command,capture_output=True,text=True,shell=True)
                 if(not response.returncode): # stdout.endswith("done.")):          #response from git clone is "Done"
                     print("Descarga completada.\nEn momentos se reiniciará para completar actualización")
