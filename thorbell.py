@@ -15,8 +15,8 @@ import json
 
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
-homePath = "/home/applica"
-#homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
+#homePath = "/home/applica"
+homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 
 urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
 app = web.application(urls,globals())
@@ -145,7 +145,7 @@ class status:
 				status.update({"LED": not status['LED']})
 				print("Updated status")
 				print(status)
-				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
+				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat","w") as st:
 					json.dump(status,st)
 					print("Status.dat changed")
 				return json.dumps(status)
