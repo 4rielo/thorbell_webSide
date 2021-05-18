@@ -17,7 +17,7 @@ $def with (title, form)
         <p> Red: $item[1] / Intensidad de la señal: $item[2]/100 </p>
         
     <br>
-    <form method="post" action="/cgi-bin/test.py/connect">
+    <form method="post" action="/cgi-bin/thorbell.py/connect">
     <label for="red" id="red_label">Seleccione la red:</label>
     <select name="red" id="red">
     $for item in list:

@@ -15,8 +15,10 @@ import json
 
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
+homePath = "/home/applica"
+#homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 
-urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status', '/update' , 'update')
+urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
 app = web.application(urls,globals())
 
 class root:
@@ -120,10 +122,62 @@ class connect:
 		return self.devices
 
 class status:
+	def __init__(self):
+		self.render = web.template.render("templates/")
 	def GET(self):
-		with open("/home/applica/THORBELL/CSB_MercurioR1/status.dat") as f:
+		input = web.input()
+		print(input)
+		if(input):
+			print("We've got a specific request")
+			if(input.status=="refresh"):
+				print("Need status update")
+				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
+					status=json.load(st)
+					print("File opened, sending current status")
+					#print(status)
+					return json.dumps(status)
+			elif(input.status=="toggleLED"):
+				print("Issued an LED toggle")
+				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
+					status=json.load(st)
+					print("File opened, reading current status")
+					print(status)
+				status.update({"LED": not status['LED']})
+				print("Updated status")
+				print(status)
+				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
+					json.dump(status,st)
+					print("Status.dat changed")
+				return json.dumps(status)
+		try:
+			print("No specific request, load entire page (from templates)")
+			f= open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat")
 			status = json.load(f)
-		return status        
+			f.close()
+		except:
+			status = {"LED": "No se pudo abrir el archivo"}
+		#return status
+		return self.render.status(status)
+	def POST(self):
+		#post = web.input()
+		with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as f:
+			status=json.load(f)
+
+		try:
+			st = open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat","w")
+			#status = json.load(st)
+			#print(file)
+			#status = {'LED' : "File oppened"}
+			status["LED"] = not status["LED"]
+			json.dump(status,st)
+			st.close()
+		except Exception as e:
+			print (e)
+			status = {'LED' : "Error abriendo status file"}
+			#json.dump(status,st)
+			pass
+		return self.render.status(status)
+
 
 if __name__ == "__main__":
 	app.run()

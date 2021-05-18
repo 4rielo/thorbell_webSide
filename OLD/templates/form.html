@@ -1,0 +1,24 @@
+$def with (title, form) 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$title</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+         
+</head>
+<body>
+    <h3>Redes disponibles:</h3>
+    <form method="post" action="/cgi-bin/test.py/connect">
+    $for item in list:
+        <input type="radio" name="red" id="red" value=$item.ssid >
+        <label for=$item.ssid >$item.ssid - SIGNAL: $item.ssid</label>
+        <br>
+
+
+    <label for="pwd">Contraseña:</label><br>
+    <input type="password" id="pwd" name="pwd"/>
+    <input type="submit" value="Conectar"/>
+    </form>
+
+</body>
+</html>

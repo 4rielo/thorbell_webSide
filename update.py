@@ -30,7 +30,6 @@ class status:
     def GET(self):
         with open("/home/applica/THORBELL/CSB_MercurioR1/status.dat") as f:
             status = json.load(f)
-        status.update({"NEWVERSION" : True})
         return status
 
 class update:
