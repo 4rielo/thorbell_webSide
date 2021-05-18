@@ -15,8 +15,8 @@ import json
 
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
-#homePath = "/home/applica"
-homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
+homePath = "/home/applica"
+#homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 
 urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
 app = web.application(urls,globals())
