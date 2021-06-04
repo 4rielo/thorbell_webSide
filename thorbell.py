@@ -150,7 +150,7 @@ class status:
 			response = requests.get(f"{localhost}/status").text
 			status=json.loads(str(response))
 		except:
-			status = {"LED": "No se pudo abrir el archivo"}
+			status = {"LED": "Oops, something went wrong. No se pudo abrir el archivo."}
 		#return status
 		return self.render.status(status)
 
