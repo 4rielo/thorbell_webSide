@@ -17,7 +17,8 @@ defaultSSID = "THORBELL"
 defaultPASS = "applica07"
 #homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 homePath = "/home/applica"
-
+port = 8085
+localhost = f"http://localhost:{port}"
 
 urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
 app = web.application(urls,globals())
@@ -28,10 +29,10 @@ class root:
 
 	def GET(self):
 		return self.hello
-				
+
 class scan:
 	def get_response(self):
-		try:		
+		try:
 			command="nmcli device"
 			response=subprocess.run(command,capture_output=True,text=True,shell=True).stdout
 			lines=response.splitlines()
@@ -43,13 +44,13 @@ class scan:
 				response=subprocess.run(command,capture_output=True,shell=True)
 				flag_wasHotspot=True
 				time.sleep(1)
-			
+
 			command="nmcli device wifi list --rescan yes"
 			devices = subprocess.run(command,capture_output=True, text=True, shell=True).stdout
 
 			if(flag_wasHotspot):
 				command=f"nmcli device wifi hotspot ssid {defaultSSID} password {defaultPASS}"
-				response=subprocess.run(command,capture_output=True,shell=True)	
+				response=subprocess.run(command,capture_output=True,shell=True)
 		except:
 			devices = "Error obtaining WiFi list\n\r"
 
@@ -64,7 +65,7 @@ class index:
 
 	def __init__(self):
 		self.render=web.template.render("templates/")
-			
+
 	def GET(self):
 		getInput=scan.get_response(self)
 		formated = getInput.splitlines()[0]
@@ -80,7 +81,7 @@ class index:
 class form:
 	def __init__(self):
 		self.render=web.template.render("templates/")
-			
+
 	def GET(self):
 		getInput=scan.get_response(self)
 		formated = getInput.splitlines()[0]
@@ -92,7 +93,7 @@ class form:
 		for line in getInput.splitlines()[1:]:
 			output.append((line[0],str(line[namePosition:nameEnd]).strip(),str(line[signalStrength:signalEnd]).strip()))
 		return self.render.form("Scan List", output)
-		
+
 class connect:
 	devices="Go to /form to select network"
 	def POST(self):
@@ -131,30 +132,23 @@ class status:
 		if(input):
 			print("We've got a specific request")
 			if(input.status=="refresh"):
-				print("Need status update")
-				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
-					status=json.load(st)
-					print("File opened, sending current status")
-					#print(status)
+				response = requests.get(f"{localhost}/status").text
+				status=json.loads(str(response))
 				return json.dumps(status)
 			elif(input.status=="toggleLED"):
 				print("Issued an LED toggle")
-				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as st:
-					status=json.load(st)
-					print("File opened, reading current status")
-					#print(status)
-				status.update({"LED": not status['LED']})
-				print("Updated status")
-				#print(status)
-				with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat","w") as st:
-					json.dump(status,st)
-					print("Status.dat changed")
+				response = requests.get(f"{localhost}/status").text
+				status=json.loads(str(response))
+				status.update({"LED_Light": not status['LED_Light']})
+				response = requests.post(f"{localhost}/status",params= {"LED_Light" : status['LED_Light']})
 				return json.dumps(status)
 		try:
 			print("No specific request, load entire page (from templates)")
-			f= open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat")
+			"""f= open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat")
 			status = json.load(f)
-			f.close()
+			f.close()"""
+			response = requests.get(f"{localhost}/status").text
+			status=json.loads(str(response))
 		except:
 			status = {"LED": "No se pudo abrir el archivo"}
 		#return status
