@@ -1,0 +1,80 @@
+$def with (status)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSB Mercurio R1 Status</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+         
+</head>
+<body>
+    <h3>Device Status:</h3>
+    <p id="LED_Status">$status['LED']</p>
+    <br>
+    <p id="new"></p>
+    <br>
+    <p id="Status">$status</p>
+    <br>
+    <!-- En "action" va primero /cgi-bin/thorbell.py , antes de /status-->
+    
+    <button type="button" onclick="toggleLED()">Toggle LED light</button>
+
+    <script>
+        
+        var home = ""
+        //var home = "/cgi-bin/thorbell.py"
+
+        window.onload = setupRefresh;
+
+        function setupRefresh() {
+            setInterval("getStatus();", 1000);
+        }
+
+        function getStatus() {
+            // Creating the XMLHttpRequest object
+            let request = new XMLHttpRequest();
+            
+            // Instantiating the request object
+            request.open("GET", home + "/status?status=refresh", true);
+         
+            // Defining event listener for readystatechange event
+            request.onreadystatechange = function() {
+                // Check if the request is compete and was successful
+                if(this.readyState === 4 && this.status === 200) {
+                    // Inserting the response from server into an HTML element
+                    document.getElementById("Status").innerHTML = this.responseText;
+
+                    var estado = JSON.parse(Text= this.responseText);
+                    //let caca= {'LED':true};
+                    //caca.LED=false;
+                    document.getElementById("LED_Status").innerHTML = estado.LED_Light;
+                }
+            };
+
+            // Sending the request to the server
+            request.send();
+        }
+
+        function toggleLED() {
+            // Creating the XMLHttpRequest object
+            let request = new XMLHttpRequest();
+            //let home = "/cgi-bin/thorbell.py"
+            // Instantiating the request object
+            request.open("GET", home + "/status?status=toggleLED", true);
+         
+            // Defining event listener for readystatechange event
+            request.onreadystatechange = function() {
+                // Check if the request is compete and was successful
+                if(this.readyState === 4 && this.status === 200) {
+                    // Inserting the response from server into an HTML element
+                    var display = JSON.parse(Text= this.responseText);
+                    document.getElementById("LED_Status").innerHTML = display.LED_Light;
+                }
+            };
+
+            // Sending the request to the server
+            request.send();
+        }
+    </script>
+
+</body>
+</html>

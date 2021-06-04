@@ -1,0 +1,22 @@
+$def with (title,list) 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$title</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+         
+</head>
+<body>
+    <h3>Avaliable networks:</h3>
+	$for item in list:
+		$if(item['in_use']==True):
+			<p>Currently connected to: $item['ssid']</p>
+
+	<select name="networks" id="selectNetwork">
+	$for item in list:
+		<option> $item['ssid']     -  SIGNAL: $item['signal']>
+	</select>
+
+	
+</body>
+</html>

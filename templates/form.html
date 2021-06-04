@@ -1,0 +1,33 @@
+$def with (title, form) 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$title</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+         
+</head>
+<body>
+    $for item in list:
+                $if(item[0]=="*"):
+                        <h3>Actualmente conectado a: $item[1] <h3>
+                        <br>
+
+    <h3>Redes disponibles:</h3>
+    $for item in list:
+        <p> Red: $item[1] / Intensidad de la señal: $item[2]/100 </p>
+        
+    <br>
+    <form method="post" action="/cgi-bin/thorbell.py/connect">
+    <label for="red" id="red_label">Seleccione la red:</label>
+    <select name="red" id="red">
+    $for item in list:
+            <option value=$item[1].replace(" ","¿.") > $item[1] </option>
+    </select>
+    <br>
+    <label for="pwd">Contraseña:</label><br>
+    <input type="password" id="pwd" name="pwd"/>
+    <input type="submit" value="Conectar"/>
+    </form>
+
+</body>
+</html>
