@@ -16,6 +16,9 @@ import json
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
 
+port = 8085
+localhost = f"http://localhost:{port}"
+
 urls = ('/','root','/status', 'status', '/update' , 'update')
 app = web.application(urls,globals())
 
@@ -28,8 +31,8 @@ class root:
 
 class status:
     def GET(self):
-        with open("/home/applica/THORBELL/CSB_MercurioR1/status.dat") as f:
-            status = json.load(f)
+        response = requests.get(f"{localhost}/status").text
+		status=json.loads(str(response))
         return status
 
 class update:
@@ -64,8 +67,8 @@ class update:
             #print(updatePath)
             command=f"rm -rf {self.updatePath}"
             subprocess.run(command,shell=True)
-            
-            #Download file "version.txt" to update path, and open it to check on latest version number 
+
+            #Download file "version.txt" to update path, and open it to check on latest version number
             command = f"wget -P {self.updatePath} -c {urlVersion}"
             response=subprocess.run(command,capture_output=True,text=True,shell=True)
             #print(response)
@@ -78,19 +81,19 @@ class update:
 
             new = self.newVersion.split(".")
             newVersion=(int(new[0]),int(new[1]),int(new[2]))
-            #Checks local version number. 
+            #Checks local version number.
             #self.localPath = "/home/applica/THORBELL/"
             try:
                 f=open(self.path + "/version.txt","r")
                 self.currentVersion=f.readline()
                 f.close()
             except:
-                self.currentVersion="0.0.0"	
+                self.currentVersion="0.0.0"
             if(self.currentVersion[-1]=="\n"):
                 self.currentVersion=self.currentVersion[:-1]
             curr=self.currentVersion.split(".")
             cVersion=(int(curr[0]),int(curr[1]),int(curr[2]))
-            #self.updateLabel.setText("Versión remota: " + f + "\nLocal: " + currentVersio			
+            #self.updateLabel.setText("Versión remota: " + f + "\nLocal: " + currentVersio
             self.update=False
             """If "Stable" version from repository is greater than current version, performs update"""
             if(newVersion[0]>cVersion[0]):
@@ -112,13 +115,15 @@ class update:
                     time.sleep(5)
                     command="reboot"
                     subprocess.run(command,shell=True)
+		else:
+			self.newVersion="No conection"
     def GET(self):
         self.fetch()
         page = f"{self.path}\nVersion: {self.currentVersion}\n"
         page += f"New version available: {self.newVersion}\n"
         page += f"Update status: {self.update}"
         return page
-        
+
 
 if __name__ == "__main__":
 	app.run()
