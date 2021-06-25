@@ -1,0 +1,34 @@
+body {
+  background-image: url('./images/fondo_FHD-100.jpg');
+  color: white;
+}
+
+#FlowControl {
+  height: 800px;
+  width: 480px;
+  margin: auto;
+}
+
+#presionEntrada {
+  height: 150px;
+  width: 150px;
+  border-radius: 150px;
+  background-image: radial-gradient(circle, rgba(255,197,0,145), rgba(255, 255, 255, 0));
+  margin: 0 auto;
+}
+
+#flujoEntrada {
+  text-align: center;
+}
+
+#presionSalida {
+  height: 150px;
+  width: 150px;
+  border-radius: 150px;
+  background-image: radial-gradient(circle, rgba(255,197,0,145), rgba(255, 255, 255, 0));
+  margin: 0 auto;
+}
+
+#flujoSalida {
+  text-align: center;
+}

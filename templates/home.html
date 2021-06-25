@@ -1,0 +1,46 @@
+$def with (status)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSB Mercurio R1 Status</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--  <style src="./static/home.css" type="text/css"></style>-->
+    <link rel="stylesheet" href="./static/home.css" type="text/css">
+</head>
+
+
+<body>
+    <h3>Device Status:</h3>
+    <p id="LED_Status">$status["LED_Light"]</p>
+    <br>
+    <p id="new"></p>
+    <br>
+    <p id="Status">$status</p>
+    <br>
+    <!-- En "action" va primero /cgi-bin/thorbell.py , antes de /status-->
+    <div id="window" >
+      <div id="LED_LightBtn">
+        $if (status['LED_Light']):
+          <img id="LightBtn" src="./static/icons/led_on.png" alt="LED_Light" onclick="toggleLED()">
+        $else:
+          <img id="LightBtn" src="./static/icons/led_off.png" alt="LED_Light" onclick="toggleLED()">
+      </div>
+      <p id="windSpeed">WindSpeed</p>
+      <br>
+
+      <div id="FlowControl">
+        <div id="presionEntrada">
+          <p id="flujoEntrada"></p>
+        </div>
+        <div id="presionSalida">
+          <p id="flujoSalida"></p>
+        </div>
+      </div>
+
+    </div>
+    <!--<button type="button" onclick="toggleLED()">Toggle LED light</button>-->
+    <script src="./static/home.js" type="text/javascript"> </script>
+
+
+</body>
+</html>

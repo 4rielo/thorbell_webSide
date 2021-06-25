@@ -5,7 +5,7 @@
 import cgitb
 cgitb.enable()
 
-#import nmcli
+#import nmclipip3
 import web
 from web import form
 import subprocess
@@ -15,12 +15,13 @@ import json
 
 defaultSSID = "THORBELL"
 defaultPASS = "applica07"
+homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 #homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
-homePath = "/home/applica"
+#homePath = "/home/applica"
 port = 8085
 localhost = f"http://localhost:{port}"
 
-urls = ('/','root','/scan','scan','/index','index', '/form','form','/connect','connect','/status', 'status')
+urls = ('/','root','/scan','scan','/index','index','/home','home', '/form','form','/connect','connect','/status', 'status')
 app = web.application(urls,globals())
 
 class root:
@@ -77,6 +78,49 @@ class index:
 		for line in getInput.splitlines()[1:]:
 			output.append((line[0],line[namePosition:nameEnd],line[signalStrength:signalEnd]))
 		return self.render.index("Scan List", output)
+
+class home:
+	def __init__(self):
+		self.render=web.template.render("templates/")
+		try:
+			status = requests.get(f"{localhost}/status").text
+		except:
+			status = {'Empty' : True}
+
+	def GET(self):
+		input = web.input()
+		print(input)
+		if(input):
+			print("We've got a specific request************************************")
+			print(input)
+			if(input.status=="refresh"):
+				print("need to refresh status only")
+				response = requests.get(f"{localhost}/status").text
+				status=json.loads(str(response))
+				return json.dumps(status)
+			elif(input.status=="adc"):
+				print("Wants to read ADC Data____________________")
+				response = requests.get(f"{localhost}/adc").text
+				status=json.loads(str(response))
+				return json.dumps(status)
+			elif(input.status=="toggleLED"):
+				print("Issued an LED toggle")
+				response = requests.get(f"{localhost}/status").text
+				status=json.loads(str(response))
+				status.update({"LED_Light": not status['LED_Light']})
+				response = requests.post(f"{localhost}/status",params= {"LED_Light" : status['LED_Light']})
+				return json.dumps(status)
+		try:
+			print("No specific request, load entire page (from templates)")
+			"""f= open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat")
+			status = json.load(f)
+			f.close()"""
+			response = requests.get(f"{localhost}/status").text
+			status=json.loads(str(response))
+		except:
+			status = {"LED": "Oops, something went wrong. No se pudo abrir el archivo."}
+		#return status
+		return self.render.home(status)
 
 class form:
 	def __init__(self):
@@ -156,10 +200,10 @@ class status:
 
 	def POST(self):
 		#post = web.input()
-		with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as f:
-			status=json.load(f)
+		"""with open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat") as f:
+			status=json.load(f)"""
 
-		try:
+		"""try:
 			st = open(f"{homePath}/THORBELL/CSB_MercurioR1/status.dat","w")
 			#status = json.load(st)
 			#print(file)
@@ -171,7 +215,7 @@ class status:
 			print (e)
 			status = {'LED' : "Error abriendo status file"}
 			#json.dump(status,st)
-			pass
+			pass"""
 		return self.render.status(status)
 
 

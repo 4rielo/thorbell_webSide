@@ -2,9 +2,9 @@ $def with (status)
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CSB Mercurio R1 Status</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-         
+    <title>CSB Mercurio R1 Status</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
 </head>
 <body>
     <h3>Device Status:</h3>
@@ -15,7 +15,7 @@ $def with (status)
     <p id="Status">$status</p>
     <br>
     <!-- En "action" va primero /cgi-bin/thorbell.py , antes de /status-->
-    
+
     <button type="button" onclick="toggleLED()">Toggle LED light</button>
 
     <script>
@@ -28,10 +28,10 @@ $def with (status)
         function getStatus() {
             // Creating the XMLHttpRequest object
             let request = new XMLHttpRequest();
-         
+
             // Instantiating the request object
             request.open("GET", "/status?status=refresh", true);
-         
+
             // Defining event listener for readystatechange event
             request.onreadystatechange = function() {
                 // Check if the request is compete and was successful
@@ -53,10 +53,10 @@ $def with (status)
         function toggleLED() {
             // Creating the XMLHttpRequest object
             let request = new XMLHttpRequest();
-         
+
             // Instantiating the request object
             request.open("GET", "/status?status=toggleLED", true);
-         
+
             // Defining event listener for readystatechange event
             request.onreadystatechange = function() {
                 // Check if the request is compete and was successful
