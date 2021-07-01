@@ -1,34 +1,59 @@
-body {
-  background-image: url('./images/fondo_FHD-100.jpg');
-  color: white;
+*{
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 #FlowControl {
   height: 800px;
   width: 480px;
-  margin: auto;
+  margin: 0 auto;
+}
+
+#dialSuperior {
+  background-image: url("./static/images/semi_circulo_superior.png");
+  background-position: center;
+  margin: 0 auto;
+  display: flex;
+}
+
+#entradaBackground {
+  z-index: -1;
+  margin: 0 auto;
 }
 
 #presionEntrada {
   height: 150px;
   width: 150px;
   border-radius: 150px;
-  background-image: radial-gradient(circle, rgba(255,197,0,145), rgba(255, 255, 255, 0));
   margin: 0 auto;
+  z-index: auto;
 }
 
 #flujoEntrada {
   text-align: center;
+  /*transform: translate(0%, 100%);*/
+}
+
+#dialInferior {
+  background-image: url("./static/images/semi_circulo_inferior.png");
 }
 
 #presionSalida {
   height: 150px;
   width: 150px;
   border-radius: 150px;
-  background-image: radial-gradient(circle, rgba(255,197,0,145), rgba(255, 255, 255, 0));
   margin: 0 auto;
 }
 
 #flujoSalida {
   text-align: center;
+  transform: translate(0%, 100%);
+}
+
+body {
+  background-image: url('./images/fondo_FHD-100.jpg');
+  background-color: rgb(153,102,153);
+  color: white;
+  /*background-repeat: repeat-y;*/
+  background-attachment: fixed;
 }

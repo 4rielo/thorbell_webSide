@@ -8,15 +8,8 @@ $def with (status)
     <link rel="stylesheet" href="./static/home.css" type="text/css">
 </head>
 
-
 <body>
     <h3>Device Status:</h3>
-    <p id="LED_Status">$status["LED_Light"]</p>
-    <br>
-    <p id="new"></p>
-    <br>
-    <p id="Status">$status</p>
-    <br>
     <!-- En "action" va primero /cgi-bin/thorbell.py , antes de /status-->
     <div id="window" >
       <div id="LED_LightBtn">
@@ -25,21 +18,35 @@ $def with (status)
         $else:
           <img id="LightBtn" src="./static/icons/led_off.png" alt="LED_Light" onclick="toggleLED()">
       </div>
-      <p id="windSpeed">WindSpeed</p>
-      <br>
+
 
       <div id="FlowControl">
-        <div id="presionEntrada">
-          <p id="flujoEntrada"></p>
+
+        <div id="dialSuperior" class:container>
+          <img id="entradaBackground" src="./static/images/semi_circulo_superior.png">
+          <div id="presionEntrada">
+            <p id="flujoEntrada"></p>
+          </div>
         </div>
-        <div id="presionSalida">
-          <p id="flujoSalida"></p>
+
+        <div id="dialInferior">
+          <div id="presionSalida">
+            <p id="flujoSalida"></p>
+          </div>
         </div>
+
       </div>
 
+      <p id="windSpeed">WindSpeed</p>
+      <br>
     </div>
+
+    <p id="Status">$status</p>
+
     <!--<button type="button" onclick="toggleLED()">Toggle LED light</button>-->
     <script src="./static/home.js" type="text/javascript"> </script>
+
+
 
 
 </body>

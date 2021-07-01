@@ -18,11 +18,15 @@ function getStatus() {
         if(this.readyState === 4 && this.status === 200) {
             // Inserting the response from server into an HTML element
             document.getElementById("Status").innerHTML = this.responseText;
+            var status = JSON.parse(Text= this.responseText);
 
-            var caca = JSON.parse(Text= this.responseText);
-            //let caca= {'LED':true};
-            //caca.LED=false;
-            document.getElementById("LED_Status").innerHTML = caca.LED_Light;
+            if(status.LED_Light) {
+              document.getElementById("LED_LightBtn").innerHTML = '<img src="./static/icons/led_on.png" alt="LED_Light" onclick="toggleLED()">'
+            }
+            else {
+              document.getElementById("LED_LightBtn").innerHTML = '<img src="./static/icons/led_off.png" alt="LED_Light" onclick="toggleLED()">'
+            }
+            document.getElementById("LED_Status").innerHTML = satus.LED_Light;
 
         }
     };
