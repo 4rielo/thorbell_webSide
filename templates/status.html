@@ -8,7 +8,7 @@ $def with (status)
 </head>
 <body>
     <h3>Device Status:</h3>
-    <p id="LED_Status">$status['LED']</p>
+    <p id="LED_Status">$status['LED_Light']</p>
     <br>
     <p id="new"></p>
     <br>
@@ -42,7 +42,7 @@ $def with (status)
                     var caca = JSON.parse(Text= this.responseText);
                     //let caca= {'LED':true};
                     //caca.LED=false;
-                    document.getElementById("LED_Status").innerHTML = caca.LED;
+                    document.getElementById("LED_Status").innerHTML = caca.LED_Light;
                 }
             };
 
@@ -63,7 +63,7 @@ $def with (status)
                 if(this.readyState === 4 && this.status === 200) {
                     // Inserting the response from server into an HTML element
                     var display = JSON.parse(Text= this.responseText);
-                    document.getElementById("LED_Status").innerHTML = display.LED;
+                    document.getElementById("LED_Status").innerHTML = display.LED_Light;
                 }
             };
 

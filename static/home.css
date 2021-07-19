@@ -1,59 +1,176 @@
+body {
+  background-image: url('./images/fondo_FHD-100.jpg');
+  color: white;
+  /*background-repeat: repeat-y;*/
+  background-attachment: fixed;
+  font-family: Montserrat_custom;
+}
+
+@font-face {
+  font-family: Montserrat_custom;
+  src: url('./fonts/Montserrat-Regular.ttf');
+}
+
 *{
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#FlowControl {
+.Display {
   height: 800px;
   width: 480px;
   margin: 0 auto;
+  /*display: flex;
+  justify-content: center;*/
+}
+
+.topHeader{
+  height: 133px;
+  width: 480px;
+  /*margin: 0 auto;*/
+}
+.absolute{
+  position: absolute;
+}
+.Btn {
+  /*height: 150px;
+  width: 100px;*/
+}
+
+#relojBtn{
+  left: 73px;
+  top: 24px;
+}
+#currentTime{
+  left: 118px;
+  top: 34px;
+  margin-top: 0;
+  font-size: 13px;
+}
+
+#calendarBtn{
+  left: 73px;
+  top: 74px;
+}
+#currentDate{
+  left: 118px;
+  top: 84px;
+  margin-top: 0;
+  font-size: 13px;
+}
+
+#configBtn{
+  right: 80px;
+  top: 24px;
+}
+#alertaBtn{
+  right: 80px;
+  top: 74px;
+}
+
+/*#rutina{
+  /*position: relative;*/
+.rutinaContainer{
+  left: 68px;
+  top: 133px;
+}
+#rutinaBtn{
+
+}
+
+#puerta{
+  left: 312px;
+  /*right: 68px;*/
+  top: 133px;
+}
+#puertaBtn{
+  /*left: 19px;*/
+  left: 50%;
+  /*top: 20px;*/
+  top: 50%;
 }
 
 #dialSuperior {
-  background-image: url("./static/images/semi_circulo_superior.png");
-  background-position: center;
-  margin: 0 auto;
-  display: flex;
+  top: 202px;
+  height: 231px;
+  width: 480px;
+  /*background-image: url("./static/images/semi_circulo_superior.png");*/
+  /*background-position: center;*/
+  overflow: hidden;
 }
-
 #entradaBackground {
+  left: 50px;
   z-index: -1;
-  margin: 0 auto;
 }
-
 #presionEntrada {
   height: 150px;
   width: 150px;
   border-radius: 150px;
   margin: 0 auto;
-  z-index: auto;
+  position: relative;
 }
-
 #flujoEntrada {
+  font-family: Montserrat_custom;
+  font-size: 25px;
+  z-index: 1;
   text-align: center;
-  /*transform: translate(0%, 100%);*/
+  bottom: 0;
+  margin-bottom: 0;
+  width: inherit;
 }
 
 #dialInferior {
-  background-image: url("./static/images/semi_circulo_inferior.png");
+  top: 445px;
+  height: 231px;
+  width: 480px;
+  overflow: hidden;
 }
-
+#salidaBackground {
+  left: 50px;
+  z-index: -1;
+}
 #presionSalida {
   height: 150px;
   width: 150px;
   border-radius: 150px;
   margin: 0 auto;
+  transform: translate(0%, -50%);
+  position: relative;
 }
-
 #flujoSalida {
+  font-family: Montserrat_custom;
+  font-size: 25px;
+  z-index: 1;
   text-align: center;
-  transform: translate(0%, 100%);
+  top: 0;
+  margin-top: 0;
+  width: inherit;
 }
 
-body {
-  background-image: url('./images/fondo_FHD-100.jpg');
-  background-color: rgb(153,102,153);
-  color: white;
-  /*background-repeat: repeat-y;*/
-  background-attachment: fixed;
+#LED_LightBtn{
+  /*position: relative;*/
+  left: 68px;
+  top: 640px;
+}
+#LightBtn{
+  /*left: 68px;
+  top:640px;*/
+}
+
+#UV_LightBtn{
+  right: 68px;
+  top:640px;
+}
+#uvBtn{
+  /*right: 68px;
+  top:640px;*/
+}
+
+#windSpeed{
+  position: absolute;
+  top: 800px
+}
+#Status{
+  position: absolute;
+  top: 880px
 }

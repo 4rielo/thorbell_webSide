@@ -1,0 +1,75 @@
+body {
+  background-image: url('./images/fondo_FHD-100.jpg');
+  color: white;
+  /*background-repeat: repeat-y;*/
+  background-attachment: fixed;
+  font-family: Montserrat_custom;
+}
+
+@font-face {
+  font-family: Montserrat_custom;
+  src: url('./fonts/Montserrat-Regular.ttf');
+}
+
+*{
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Display {
+  height: 800px;
+  width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.screenTittle{
+  top: 80px;
+  width: inherit;
+  text-align: center;
+}
+
+.Btn {
+  height: 100px;
+  width: 100px;
+}
+
+.upBtn{
+  left: 190px;
+  top: 200px;
+}
+#upBtn{
+  position: absolute;
+  left: 22px;
+  top: 38px;
+}
+.cerrarBtn{
+  left: 340px;
+  top: 366px;
+}
+.trabajoBtn{
+  left: 190px;
+  top: 366px;
+}
+.abrirBtn{
+  left: 40px;
+  top: 366px;
+}
+.downBtn{
+  left: 190px;
+  top: 533px;
+}
+#downBtn{
+  position: absolute;
+  left: 22px;
+  top: 38px;
+}
+
+.return{
+  top: 700px;
+  left: 41px;
+}

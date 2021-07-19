@@ -1,0 +1,85 @@
+body {
+  background-image: url('./images/fondo_FHD-100.jpg');
+  color: white;
+  /*background-repeat: repeat-y;*/
+  background-attachment: fixed;
+  font-family: Montserrat_custom;
+}
+
+@font-face {
+  font-family: Montserrat_custom;
+  src: url('./fonts/Montserrat-Regular.ttf');
+}
+
+*{
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Display {
+  height: 800px;
+  width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.screenTittle{
+  top: 80px;
+  width: inherit;
+  text-align: center;
+}
+
+.dial{
+  top: 161px;
+  width: 480px;
+  /*height: 479px;*/
+}
+#backgroundImage{
+  right: 5px;
+  z-index: -1;
+}
+#LED_PWM{
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  margin: 0 auto;
+  position: relative;
+}
+#LEDPWM{
+  width: inherit;
+  font-family: Montserrat_custom;
+  font-size: 25px;
+  z-index: 1;
+  text-align: center;
+  text-shadow: 2px 2px black;
+  top: 220px;
+  margin-top: 0;
+}
+
+.downBtn{
+  left: 17px;
+  top: 382px;
+  z-index: 2;
+}
+.upBtn{
+  left: 406px;
+  top: 382px;
+  z-index: 2;
+}
+.OnOffBtn{
+  top: 600px;
+  left: 196px;
+}
+#LightBtn{
+  /*margin: 0 auto;*/
+  /*top: 600px;
+  left: 196px;*/
+}
+.return{
+  top: 700px;
+  left: 41px;
+}
