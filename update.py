@@ -19,9 +19,7 @@ defaultPASS = "applica07"
 port = 8085
 localhost = f"http://localhost:{port}"
 
-urls = ('/','root',
-		'/status', 'status',
-		'/update' , 'update')
+urls = ('/','root','/status', 'status', '/update' , 'update')
 app = web.application(urls,globals())
 
 class root:
@@ -62,9 +60,6 @@ class update:
 
         if(a):
             #print("Auto Update")
-            #if(not self.path):
-            #	self.path = "./"
-            #updatePath = path + "UPDATE/"
             self.updatePath="/home/applica/update/WEB_UPDATE"
             #print(updatePath)
             command=f"rm -rf {self.updatePath}"
@@ -84,7 +79,7 @@ class update:
             new = self.newVersion.split(".")
             newVersion=(int(new[0]),int(new[1]),int(new[2]))
             #Checks local version number.
-            #self.localPath = "/home/applica/THORBELL/"
+
             try:
                 f=open(self.path + "/version.txt","r")
                 self.currentVersion=f.readline()
@@ -95,7 +90,7 @@ class update:
                 self.currentVersion=self.currentVersion[:-1]
             curr=self.currentVersion.split(".")
             cVersion=(int(curr[0]),int(curr[1]),int(curr[2]))
-            #self.updateLabel.setText("Versión remota: " + f + "\nLocal: " + currentVersio
+
             self.update=False
             """If "Stable" version from repository is greater than current version, performs update"""
             if(newVersion[0]>cVersion[0]):
@@ -109,17 +104,16 @@ class update:
                 #Download stable version from git
                 command=f"rm -rf {self.updatePath}"
                 subprocess.run(command,shell=True)
-                #time.sleep(2)
+
                 command = f"git clone {url} {self.updatePath} -b stable"
                 response=subprocess.run(command,capture_output=True,text=True,shell=True)
-                if(not response.returncode): # stdout.endswith("done.")):          #response from git clone is "Done"
+                if(not response.returncode): #response from git clone is "Done"
                     print("Descarga completada.\nEn momentos se reiniciará para completar actualización")
                     time.sleep(5)
                     command="reboot"
                     subprocess.run(command,shell=True)
 		else:
 			self.newVersion="No conection"
-
     def GET(self):
         self.fetch()
         page = f"{self.path}\nVersion: {self.currentVersion}\n"
