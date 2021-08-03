@@ -27,6 +27,14 @@ body {
   position: absolute;
 }
 
+.Btn {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .screenTittle{
   top: 80px;
   width: inherit;
@@ -36,28 +44,33 @@ body {
 .dial{
   top: 161px;
   width: 480px;
-  /*height: 479px;*/
+  height: 479px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 #backgroundImage{
   right: 5px;
-  z-index: -1;
+  z-index: -2;
 }
 #LED_PWM{
-  height: 100px;
+  /*height: 100px;
   width: 100px;
-  border-radius: 100px;
-  margin: 0 auto;
-  position: relative;
+  border-radius: 100px;*/
+  z-index: 0;
+  /*margin: 0 auto;*/
+  /*position: relative;*/
 }
 #LEDPWM{
-  width: inherit;
+  /*width: inherit;*/
   font-family: Montserrat_custom;
   font-size: 25px;
   z-index: 1;
   text-align: center;
   text-shadow: 2px 2px black;
-  top: 220px;
-  margin-top: 0;
+  /*top: 220px;
+  margin-top: 0;*/
 }
 
 .downBtn{
@@ -70,10 +83,12 @@ body {
   top: 382px;
   z-index: 2;
 }
+
 .OnOffBtn{
   top: 600px;
   left: 196px;
 }
+
 #LightBtn{
   /*margin: 0 auto;*/
   /*top: 600px;

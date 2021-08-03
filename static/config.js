@@ -1,111 +1,96 @@
 window.onload = getStatus;
 
 document.getElementById("goBack").addEventListener("click", goBack);
-document.getElementById("upBtn").addEventListener("click", increasePWM);
-document.getElementById("downBtn").addEventListener("click", decreasePWM);
+document.getElementById("idiomaBtn").addEventListener("click",showHideIdioma);
+document.getElementById("languageList").addEventListener("change",changeLanguage);
+let x = document.getElementById("language");
+x.style.display="none";
+
 
 function getStatus() {
 
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/luminariaLED?status=refresh", true);
+  request.open("GET", "/config?status=getLanguageList", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
       if(this.readyState === 4 && this.status === 200) {
+        let list=document.getElementById("languageList");
 
-        pwm = Number(JSON.parse(this.responseText).LEDPWM);
-
-        show = (1.5 * pwm).toString() + 'px';
-
-        document.getElementById("LED_PWM").style.height = show;
-        document.getElementById("LED_PWM").style.width = show;
-        document.getElementById("LED_PWM").style.borderRadius = show;
-        document.getElementById("LED_PWM").style.backgroundImage = 'radial-gradient(circle , rgba(255,255,255,145),rgba(255,255,255,0))';
-        document.getElementById("LED_PWM").style.translate = '0px ' + (240 - pwm*0.75)+'px';
-
-        document.getElementById("LEDPWM").innerHTML = pwm.toString() + '%';
+        let dict = JSON.parse(this.responseText);
+        for (item in dict) {
+          option = dict[item].replace(".dat", "");
+          list.innerHTML+=`<option value="${option}">${option}</option>`;
+        }
+      };
+  };
+  request.send();
+  // Sending the request to the server
+  let request2 = new XMLHttpRequest();
+  // Instantiating the request object
+  request2.open("GET", "/config?status=status", true);
+  // Defining event listener for readystatechange event
+  request2.onreadystatechange = function() {
+      // Check if the request is compete and was successful
+      if(this.readyState === 4 && this.status === 200) {
+        let list=document.getElementById("languageList");
+        list.value=JSON.parse(this.responseText).Idioma;
       };
   };
   // Sending the request to the server
-  request.send();
+
+  request2.send();
 }
 
 function goBack() {
   location.href = "./home";
 }
 
-function increasePWM() {
+function showHideIdioma() {
+  //let request = new XMLHttpRequest();
+  let x = document.getElementById("language");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+
+}
+
+function changeLanguage() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/luminariaLED?status=increasePWM", true);
+  let list=document.getElementById("languageList");
+  value=list.value;
+  request.open("POST", `/config?language=${value}`, true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
       if(this.readyState === 4 && this.status === 200) {
-        pwm = Number(JSON.parse(this.responseText).LEDPWM);
-
-        show = (1.5 * pwm).toString() + 'px';
-
-        document.getElementById("LED_PWM").style.height = show;
-        document.getElementById("LED_PWM").style.width = show;
-        document.getElementById("LED_PWM").style.borderRadius = show;
-        document.getElementById("LED_PWM").style.backgroundImage = 'radial-gradient(circle , rgba(255,255,255,145),rgba(255,255,255,0))';
-        document.getElementById("LED_PWM").style.translate = '0px ' + (240 - pwm*0.75)+'px';
-
-        document.getElementById("LEDPWM").innerHTML = pwm.toString() + '%';
+        let lista=document.getElementById("lista");
+        lista=this.responseText;
+        updateLanguage();
       };
   };
   // Sending the request to the server
   request.send();
 }
 
-function decreasePWM() {
-  let request = new XMLHttpRequest();
-  // Instantiating the request object
-  request.open("GET", "/luminariaLED?status=decreasePWM", true);
-  // Defining event listener for readystatechange event
-  request.onreadystatechange = function() {
-      // Check if the request is compete and was successful
-      if(this.readyState === 4 && this.status === 200) {
-        pwm = Number(JSON.parse(this.responseText).LEDPWM);
-
-        show = (1.5 * pwm).toString() + 'px';
-
-        document.getElementById("LED_PWM").style.height = show;
-        document.getElementById("LED_PWM").style.width = show;
-        document.getElementById("LED_PWM").style.borderRadius = show;
-        document.getElementById("LED_PWM").style.backgroundImage = 'radial-gradient(circle , rgba(255,255,255,145),rgba(255,255,255,0))';
-        document.getElementById("LED_PWM").style.translate = '0px ' + (240 - pwm*0.75)+'px';
-
-        document.getElementById("LEDPWM").innerHTML = pwm.toString() + '%';
-      };
-  };
-  // Sending the request to the server
-  request.send();
-}
-
-function toggleLED() {
+function updateLanguage() {
     // Creating the XMLHttpRequest object
     let request = new XMLHttpRequest();
 
     // Instantiating the request object
-    request.open("GET", "/luminariaLED?status=toggleLED", true);
+    request.open("GET", "/config?status=language", true);
 
     // Defining event listener for readystatechange event
     request.onreadystatechange = function() {
         // Check if the request is compete and was successful
         if(this.readyState === 4 && this.status === 200) {
             // Inserting the response from server into an HTML element
-            var display = JSON.parse(Text= this.responseText);
-            if(display.LED_Light) {
-              document.getElementById("LED_LightBtn").innerHTML = '<img id="LightBtn" class="absolute" src="./static/icons/led_on.png" alt="LED_Light">'
-            }
-            else {
-              document.getElementById("LED_LightBtn").innerHTML = '<img id="LightBtn" class="absolute" src="./static/icons/led_off.png" alt="LED_Light">'
-            }
-
-            document.getElementById("LightBtn").addEventListener("click",toggleLED);
+            let idioma = JSON.parse(Text= this.responseText);
+            document.getElementById("configTittle").innerHTML=idioma.configTittle;
         }
     };
 

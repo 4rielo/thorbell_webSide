@@ -14,12 +14,14 @@ body {
 *{
   background-position: center;
   background-repeat: no-repeat;
+  margin: 0;
 }
 
 .Display {
   height: 800px;
   width: 480px;
   margin: 0 auto;
+  position: relative;
   /*display: flex;
   justify-content: center;*/
 }
@@ -32,9 +34,13 @@ body {
 .absolute{
   position: absolute;
 }
+
 .Btn {
-  /*height: 150px;
-  width: 100px;*/
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #relojBtn{
@@ -79,10 +85,11 @@ body {
 }
 
 #puerta{
-  left: 312px;
-  /*right: 68px;*/
+  /*left: 312px;*/
+  right: 68px;
   top: 133px;
 }
+
 #puertaBtn{
   /*left: 19px;*/
   left: 50%;
@@ -147,23 +154,16 @@ body {
   width: inherit;
 }
 
-#LED_LightBtn{
-  /*position: relative;*/
-  left: 68px;
+.LED_LightBtn{
+  z-index: 2;
   top: 640px;
-}
-#LightBtn{
-  /*left: 68px;
-  top:640px;*/
+  left: 68px;
 }
 
-#UV_LightBtn{
+.UV_LightBtn{
+  z-index: 2;
   right: 68px;
-  top:640px;
-}
-#uvBtn{
-  /*right: 68px;
-  top:640px;*/
+  top: 640px;
 }
 
 #windSpeed{

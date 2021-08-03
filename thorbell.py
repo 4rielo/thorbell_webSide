@@ -21,6 +21,12 @@ homePath = "/home/arielo/MEGAsync/APPLICA/THORBELL/PRODUCTION"
 #homePath = "/home/applica"
 port = 8085
 localhost = f"http://localhost:{port}"
+localpath = __file__
+if(localpath.endswith("/thorbell.py")):			#It is either ./thorbell.py, or something/thorbell.py
+	localpath=localpath.replace("/thorbell.py","")
+else:			#File was directly executed, and therefore, __file__="thorbell.py"
+	localpath="."
+
 
 urls = ('/','root',
 		'/scan','scan',
@@ -40,6 +46,11 @@ class root:
 		self.hello="Please go to /scan to search for available networks"
 
 	def GET(self):
+		params=web.input()
+		for x in params:
+			if(x=="path"):
+				print("Return local path////////////////////////////////////////")
+				return localpath
 		try:
 			print("Retrieving language info")
 			response = requests.get(f"{localhost}/language").text
@@ -83,7 +94,7 @@ class scan:
 
 class index:
 	def __init__(self):
-		self.render=web.template.render("templates/")
+		self.render=web.template.render("./cgi-bin/templates/")
 
 	def GET(self):
 		getInput=scan.get_response(self)
@@ -99,7 +110,7 @@ class index:
 
 class home:
 	def __init__(self):
-		self.render=web.template.render("templates/")
+		self.render=web.template.render("./templates/")
 		try:
 			status = requests.get(f"{localhost}/status").text
 		except:
@@ -107,17 +118,50 @@ class home:
 
 	def GET(self):
 		input = web.input()
-		print(input)
+		#print(input)
 		if(input):
-			print("We've got a specific request************************************")
-			print(input)
+			#print("We've got a specific request************************************")
+			#print(input)
 			if(input.status=="refresh"):
-				print("need to refresh status only")
+				#print("need to refresh status only")
 				try:
 					response = requests.get(f"{localhost}/status").text
 					status=json.loads(str(response))
 				except:
 					status = "Error"
+
+				try:
+					response = requests.get(f"{localhost}/adc").text
+					adc=json.loads(str(response))
+				except:
+					#status = "Error"
+					adc = {
+						"presionSalida" : "ERROR",
+						"presionEntrada" : "ERROR",
+						"flujoEntrada" : "ERROR" ,
+						"flujoSalida" : "ERROR"
+					}
+
+				try:
+					response= requests.get(f"{localhost}/status", params = "time").text
+					#Convierte el string con fecha y hora, en OBJETO de datetime
+					currentTimeDate=datetime.datetime.fromisoformat(response)
+		            #Actualiza hora y fecha
+		            #obtiene la hora en string para mostrar en pantalla
+					currentTime=currentTimeDate.strftime("%H:%M:%S")
+					today=currentTimeDate.strftime("%d/%m/%Y")
+					time = {	"time": currentTime,
+					 			"date": today
+							}
+					#print(f"CurrentTimeDate: {status}")
+				except:
+					time = {	"time": "ERROR",
+					 			"date": "ERROR"
+							}
+					#print("Some error while getting the time")
+
+				status.update(adc)
+				status.update(time)
 				return json.dumps(status)
 			elif(input.status=="adc"):
 				print("Wants to read ADC Data____________________")
@@ -285,7 +329,9 @@ class luminariaUV:
 					aux=datetime.datetime.min
 					aux=aux.replace(hour=uv_timer.hour,minute=uv_timer.minute)
 					increment = datetime.timedelta(minutes=1)
-					if(aux.hour < 24 and aux.minute <59):				#checks that it's  below 23:59
+					if(aux.hour < 23):				#checks that it's  below 23:59
+						aux += increment
+					elif(aux.minute < 59):
 						aux += increment
 					uv_timer=uv_timer.replace(hour=aux.hour, minute=aux.minute)
 					status['UV_Timer'] = uv_timer.__str__()
@@ -420,40 +466,26 @@ class config:
 	def GET(self):
 		input = web.input()
 		if(input):
-			if(input.status=="subirPuerta"):
+			if(input.status=="getLanguageList"):
 				try:
-					response = requests.post(f"{localhost}/status",params = {'puerta' : 'subir_init'})
-					status=json.loads(str(response))
+					response = requests.get(f"{localhost}/language",params = "list").text
+					languageList=json.loads(str(response))
 				except:
-					status = "Error"
-				return json.dumps(status)
-			elif(input.status=="bajarPuerta"):
+					languageList = "Error retrieving Language List"
+				return json.dumps(languageList)
+			elif(input.status=="language"):
 				try:
-					response = requests.post(f"{localhost}/status",params = {'puerta' : 'bajar_init'})
-					status=json.loads(str(response))
+					response = requests.get(f"{localhost}/language").text
+					idioma=json.loads(response)
 				except:
-					status = "Error"
-				return json.dumps(status)
-			elif(input.status=="abrirPuerta"):
+					idioma = {'Empty' : True}
+				return json.dumps(idioma)
+			elif(input.status=="status"):
 				try:
-					response = requests.post(f"{localhost}/status",params = {'puerta' : 'abrir'})
-					status=json.loads(str(response))
+					response = requests.get(f"{localhost}/status").text
+					status=json.loads(response)
 				except:
-					status = "Error"
-				return json.dumps(status)
-			elif(input.status=="trabajoPuerta"):
-				try:
-					response = requests.post(f"{localhost}/status",params = {'puerta' : 'trabajo'})
-					status=json.loads(str(response))
-				except:
-					status = "Error"
-				return json.dumps(status)
-			elif(input.status=="cerrarPuerta"):
-				try:
-					response = requests.post(f"{localhost}/status",params = {'puerta' : 'cerrar'})
-					status=json.loads(str(response))
-				except:
-					status = "Error"
+					status = {'Empty' : True}
 				return json.dumps(status)
 
 		#no hubo ningún "input", por lo que se envía la página entera
@@ -471,6 +503,16 @@ class config:
 			idioma = {'Empty' : True }
 
 		return self.render.config(idioma,status)
+	def POST(self):
+		input = web.input()
+		if(input):
+			if(input.language):
+				try:
+					response = requests.post(f"{localhost}/status", params= {'Idioma': input.language }).text
+					status=json.loads(str(response))
+				except:
+					status = "Error"
+				return json.dumps(status)
 
 class form:
 	def __init__(self):

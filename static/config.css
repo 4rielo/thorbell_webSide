@@ -22,64 +22,49 @@ body {
   margin: 0 auto;
   position: relative;
 }
-
 .absolute {
   position: absolute;
 }
-
+.Btn {
+  height: 75px;
+  width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .screenTittle{
   top: 80px;
   width: inherit;
   text-align: center;
 }
-
-.dial{
-  top: 161px;
-  width: 480px;
-  /*height: 479px;*/
+.C_IdiomaBtn {
+  top: 288px;
+  left: 138px;
 }
-#backgroundImage{
-  right: 5px;
-  z-index: -1;
+.C_InfoBtn {
+  top: 288px;
+  right: 138px;
 }
-#LED_PWM{
-  height: 100px;
-  width: 100px;
-  border-radius: 100px;
-  margin: 0 auto;
-  position: relative;
+.C_LoginBtn {
+  bottom: 322px;
+  left: 138px;
 }
-#LEDPWM{
-  width: inherit;
-  font-family: Montserrat_custom;
-  font-size: 25px;
-  z-index: 1;
-  text-align: center;
-  text-shadow: 2px 2px black;
-  top: 220px;
-  margin-top: 0;
+.C_ApagarBtn {
+  bottom: 322px;
+  right: 138px;
 }
 
-.downBtn{
-  left: 17px;
-  top: 382px;
-  z-index: 2;
+.language{
+  top: 520px;
+  left: 140px;
 }
-.upBtn{
-  left: 406px;
-  top: 382px;
-  z-index: 2;
+#language{
+  display: none;
 }
-.OnOffBtn{
-  top: 600px;
-  left: 196px;
+.languageList{
+  width: 200px;
 }
-#LightBtn{
-  /*margin: 0 auto;*/
-  /*top: 600px;
-  left: 196px;*/
-}
-.return{
+.return {
   top: 700px;
   left: 41px;
 }

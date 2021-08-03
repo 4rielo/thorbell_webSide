@@ -19,7 +19,9 @@ defaultPASS = "applica07"
 port = 8085
 localhost = f"http://localhost:{port}"
 
-urls = ('/','root','/status', 'status', '/update' , 'update')
+urls = ('/','root',
+		'/status', 'status',
+		'/update' , 'update')
 app = web.application(urls,globals())
 
 class root:
@@ -117,6 +119,7 @@ class update:
                     subprocess.run(command,shell=True)
 		else:
 			self.newVersion="No conection"
+
     def GET(self):
         self.fetch()
         page = f"{self.path}\nVersion: {self.currentVersion}\n"

@@ -5,42 +5,42 @@ $def with (idioma,status)
     <title>CSB Mercurio R1 Status</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!--  <style src="./static/home.css" type="text/css"></style>-->
-    <link rel="stylesheet" href="./static/luminariaLED.css" type="text/css">
+    <link rel="stylesheet" href="/static/config.css" type="text/css">
 </head>
 
 <body>
   <div class="Display">
 
     <div class="screenTittle absolute">
-      <h1 id="luminariaLED_tittle">$idioma['configTittle']</h1>
+      <h1 id="configTittle">$idioma['configTittle']</h1>
     </div>
 
-    <div class="downBtn absolute">
-      <img id="downBtn" src="./static/icons/down_released.png" alt="downBtn">
+    <div class="C_IdiomaBtn Btn absolute">
+      <img id="idiomaBtn" class="absolute" src="/static/icons/idioma.png" alt="IdiomaButton">
     </div>
 
-    <div class="dial absolute">
-      <img id="backgroundImage" class="absolute" src="./static/images/dial_completo.png" alt="">
-      <div id="LED_PWM"></div>
-      <p id="LEDPWM" class="absolute">$status['LEDPWM']</p>
+    <div class="C_InfoBtn Btn absolute">
+      <img id="infoBtn" class="absolute" src="/static/icons/info.png" alt="InfoButton">
     </div>
 
-    <div class="upBtn absolute">
-      <img id="upBtn" src="./static/icons/up_released.png" alt="upBtn">
+    <div class="C_LoginBtn Btn absolute">
+      <img id="loginBtn" class="absolute" src="/static/icons/login.png" alt="LoginButton">
     </div>
 
-    <div id="LED_LightBtn" class="OnOffBtn absolute">
-      $if (status['LED_Light']):
-        <img id="LightBtn" class="absolute" src="./static/icons/led_on.png" alt="LED_Light" onclick="toggleLED()">
-      $else:
-        <img id="LightBtn" class="" src="./static/icons/led_off.png" alt="LED_Light" onclick="toggleLED()">
+    <div class="C_ApagarBtn Btn absolute">
+      <img id="apagarBtn" class="absolute" src="/static/icons/turn_off.png" alt="ApagarButton">
     </div>
 
     <div class="return absolute">
-      <img id="goBack" class="absolute" src="./static/icons/back.png" alt="return">
+      <img id="goBack" class="absolute" src="/static/icons/back.png" alt="return">
     </div>
 
+    <div class="language absolute" id="language">
+      <select class="absolute languageList" name="languageList" id="languageList">
+      </select>
+    </div>
   </div>
-  <script src="./static/luminariaLED.js" type="text/javascript"> </script>
+  <p id="lista"></p>
+  <script src="/static/config.js" type="text/javascript"> </script>
 </body>
 </html>

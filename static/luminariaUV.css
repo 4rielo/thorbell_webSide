@@ -27,6 +27,14 @@ body {
   position: absolute;
 }
 
+.Btn {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .screenTittle{
   top: 80px;
   width: inherit;
