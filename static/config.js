@@ -11,7 +11,7 @@ function getStatus() {
 
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/config?status=getLanguageList", true);
+  request.open("GET", "./config?status=getLanguageList", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -29,7 +29,7 @@ function getStatus() {
   // Sending the request to the server
   let request2 = new XMLHttpRequest();
   // Instantiating the request object
-  request2.open("GET", "/config?status=status", true);
+  request2.open("GET", "./config?status=status", true);
   // Defining event listener for readystatechange event
   request2.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -63,7 +63,7 @@ function changeLanguage() {
   // Instantiating the request object
   let list=document.getElementById("languageList");
   value=list.value;
-  request.open("POST", `/config?language=${value}`, true);
+  request.open("POST", `./config?language=${value}`, true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -82,7 +82,7 @@ function updateLanguage() {
     let request = new XMLHttpRequest();
 
     // Instantiating the request object
-    request.open("GET", "/config?status=language", true);
+    request.open("GET", "./config?status=language", true);
 
     // Defining event listener for readystatechange event
     request.onreadystatechange = function() {

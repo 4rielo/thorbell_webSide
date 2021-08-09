@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSB Mercurio R1 Status</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="/static/home.css" type="text/css">
+</head>
+
+<body>
+  <div class="Display">
+
+    <div class="topHeader absolute">
+      <img id="relojBtn" class="absolute" src="/static/icons/reloj.png" alt="" />
+      <p id="currentTime" class="absolute" >Hora actual</p>
+      <img id="calendarBtn" class="absolute" src="/static/icons/calendario.png" alt="" />
+      
+      <p id="currentDate" class="absolute" >Fecha Actual</p>
+
+      <img id="configBtn" class="absolute" src="/static/icons/configuracion.png" alt="" onclick="config()" />
+      <img id="alertaBtn" class="absolute" src="/static/icons/alerta.png" alt="" />
+    </div>
+
+    <div id="rutina" class="absolute Btn rutinaContainer">
+      <img id="rutinaBtn" class="" src="/static/icons/routine_on.png" alt="Rutina" />
+    </div>
+
+    <div id="puerta" class="absolute Btn">
+      <img id="puertaBtn" class="" src="/static/icons/ajuste_de_puerta.png" alt="puerta" onclick="controlPuerta()" />
+      <p id="puertaLbl"></p>
+    </div>
+
+    <div class="absolute" id="FlowControl">
+
+      <div class="absolute" id="dialSuperior">
+        <img class="absolute" id="entradaBackground" src="/static/images/semi_circulo_superior.png" />
+        <div id="presionEntrada"> </div>
+        <p class="absolute" id="flujoEntrada"></p>
+      </div>
+
+      <div class="absolute" id="dialInferior">
+        <img class="absolute" id="entradaBackground" src="/static/images/semi_circulo_inferior.png" />
+        <div id="presionSalida"> </div>
+        <p class="absolute" id="flujoSalida"></p>
+      </div>
+
+    </div>
+
+    <div id="LED_LightBtn" class="absolute Btn LED_LightBtn">
+
+        <img id="LightBtn" class="" src="/static/icons/led_off.png" alt="LED_Light" onclick="toggleLED()"/>
+    </div>
+
+    <div id="UV_LightBtn" class="absolute Btn UV_LightBtn">
+        <img id="uvBtn" class="absolute" src="/static/icons/uv_off.png" alt="UV_Light" onclick="toggleUV()"/>
+    </div>
+
+  </div>
+
+  <script src="/static/home.js" type="text/javascript"> </script>
+</body>
+</html>

@@ -20,7 +20,7 @@ body {
 .Display {
   height: 800px;
   width: 480px;
-  margin: 0 auto;
+  margin: auto auto;
   position: relative;
   /*display: flex;
   justify-content: center;*/

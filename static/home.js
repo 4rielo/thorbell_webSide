@@ -8,6 +8,8 @@ function setupRefresh() {
     //document.getElementById("LED_Light").onmousedown="LED_LightMouseDown()";
 }
 
+document.getElementById("configBtn").addEventListener("click",config);
+
 function getPath() {
   //var localpath;
   try {
@@ -34,7 +36,7 @@ function getStatus() {
     let request = new XMLHttpRequest();
 
     // Instantiating the request object
-    request.open("GET", "/home?status=refresh", true);
+    request.open("GET", "./home?status=refresh", true);
     //request.open("GET", "127.0.0.1:8085/status")
     // Defining event listener for readystatechange event
     request.onreadystatechange = function() {
@@ -156,7 +158,7 @@ function getAirSpeed() {
     let request = new XMLHttpRequest();
 
     // Instantiating the request object
-    request.open("GET", "/home?status=adc", true);
+    request.open("GET", "./home?status=adc", true);
 
     // Defining event listener for readystatechange event
     request.onreadystatechange = function() {
@@ -254,7 +256,7 @@ function getTime(){
   let request = new XMLHttpRequest();
 
   // Instantiating the request object
-  request.open("GET", "/home?status=timeDate", true);
+  request.open("GET", "./home?status=timeDate", true);
 
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
@@ -309,7 +311,7 @@ function toggleLED() {
     let request = new XMLHttpRequest();
 
     // Instantiating the request object
-    request.open("GET", "/home?status=toggleLED", true);
+    request.open("GET", "./home?status=toggleLED", true);
 
     // Defining event listener for readystatechange event
     request.onreadystatechange = function() {
@@ -355,7 +357,7 @@ function toggleUV() {
   let request = new XMLHttpRequest();
 
   // Instantiating the request object
-  request.open("GET", "/home?status=toggleUV", true);
+  request.open("GET", "./home?status=toggleUV", true);
 
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {

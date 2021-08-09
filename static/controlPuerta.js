@@ -12,7 +12,7 @@ function goBack() {
 function subirPuerta() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/controlPuerta?status=subirPuerta", true);
+  request.open("GET", "./controlPuerta?status=subirPuerta", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -27,7 +27,7 @@ function subirPuerta() {
 function bajarPuerta() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/controlPuerta?status=bajarPuerta", true);
+  request.open("GET", "./controlPuerta?status=bajarPuerta", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -42,7 +42,7 @@ function bajarPuerta() {
 function abrirPuerta() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/controlPuerta?status=abrirPuerta", true);
+  request.open("GET", "./controlPuerta?status=abrirPuerta", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -57,7 +57,7 @@ function abrirPuerta() {
 function trabajoPuerta() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/controlPuerta?status=trabajoPuerta", true);
+  request.open("GET", "./controlPuerta?status=trabajoPuerta", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
@@ -72,7 +72,7 @@ function trabajoPuerta() {
 function cerrarPuerta() {
   let request = new XMLHttpRequest();
   // Instantiating the request object
-  request.open("GET", "/controlPuerta?status=cerrarPuerta", true);
+  request.open("GET", "./controlPuerta?status=cerrarPuerta", true);
   // Defining event listener for readystatechange event
   request.onreadystatechange = function() {
       // Check if the request is compete and was successful
